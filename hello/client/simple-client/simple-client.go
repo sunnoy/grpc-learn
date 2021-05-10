@@ -10,12 +10,10 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	pb "openvpn/proto"
-	"time"
 )
 
 const (
-	address     = "127.0.0.1:1989"
-	defaultName = "world"
+	address = "127.0.0.1:1989"
 )
 
 func main() {
@@ -30,14 +28,8 @@ func main() {
 
 	c := pb.NewGreeterClient(conn)
 
-	name := defaultName
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-
-	defer cancel()
-
-	r, err := c.SayHello(ctx, &pb.HelloRequest{
-		Name: name,
+	r, err := c.SayHello(context.Background(), &pb.HelloRequest{
+		Name: "hello world",
 	})
 
 	if err != nil {

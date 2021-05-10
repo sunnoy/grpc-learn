@@ -22,13 +22,19 @@ const PORT = ":1989"
 
 func main() {
 	server := grpc.NewServer()
+
+	// 第二个参数类型是 StreamServiceServer interface 而 StreamService 实现了 StreamServiceServer 接口
 	pb.RegisterStreamServiceServer(server, &StreamService{})
+
 	lis, err := net.Listen("tcp", PORT)
 	if err != nil {
 		log.Fatalf("list %s", err)
 
 	}
 
+	// Serve accepts incoming connections on the listener lis, creating a new
+	// ServerTransport and service goroutine for each. The service goroutines
+	// read gRPC requests and then call the registered handlers to reply to them.
 	server.Serve(lis)
 
 }
@@ -36,7 +42,10 @@ func main() {
 func (s *StreamService) List(r *pb.StreamRequest, stream pb.StreamService_ListServer) error {
 
 	for n := 0; n <= 10; n++ {
+
 		time.Sleep(time.Second * 1)
+
+		// 开始发送消息
 		err := stream.Send(&pb.StreamResponse{
 			Pt: &pb.StreamPoint{
 				Name:  r.Pt.Name,
