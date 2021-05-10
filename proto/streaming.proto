@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "proto/";
+
+package proto;
+
+service StreamService {
+  // 响应流
+  rpc List(StreamRequest) returns (stream StreamResponse) {};
+  // 请求流
+  rpc Record(stream StreamRequest) returns ( StreamResponse) {};
+  // 双向流
+  rpc Route(stream StreamRequest) returns (stream StreamResponse) {};
+}
+
+message StreamPoint {
+  string name = 1;
+  int32 value = 2;
+}
+
+message StreamRequest {
+  StreamPoint pt = 1;
+
+}
+
+message StreamResponse {
+  StreamPoint pt = 1;
+
+}
