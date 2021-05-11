@@ -82,3 +82,16 @@ https://github.com/EDDYCJY/go-grpc-example
   
 # 持续输出命令行
 
+核心代码
+
+```go
+cmd := exec.Command("ping", "127.0.0.1")
+
+stdout, _ := cmd.StdoutPipe()
+
+cmd.Start()
+
+buf := bufio.NewReader(stdout)
+
+line, _, _ := buf.ReadLine()
+```
