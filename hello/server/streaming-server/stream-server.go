@@ -6,12 +6,13 @@
 package main
 
 import (
+	"bufio"
 	"google.golang.org/grpc"
 	"io"
 	"log"
 	"net"
 	pb "openvpn/proto"
-	"time"
+	"os/exec"
 )
 
 type StreamService struct {
@@ -41,21 +42,47 @@ func main() {
 
 func (s *StreamService) List(r *pb.StreamRequest, stream pb.StreamService_ListServer) error {
 
-	for n := 0; n <= 10; n++ {
+	////////////////////////////////////////////////////
+	//for n := 0; n <= 10; n++ {
+	//
+	//	time.Sleep(time.Second * 1)
+	//
+	//	// 开始发送消息
+	//	err := stream.Send(&pb.StreamResponse{
+	//		Pt: &pb.StreamPoint{
+	//			Name:  r.Pt.Name,
+	//			Value: r.Pt.Value + int32(n),
+	//		},
+	//	})
+	//
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
 
-		time.Sleep(time.Second * 1)
+	/////////////////////////////////////////////////////
+	cmd := exec.Command("ping", "127.0.0.1")
 
-		// 开始发送消息
+	stdout, _ := cmd.StdoutPipe()
+
+	cmd.Start()
+
+	buf := bufio.NewReader(stdout)
+
+	for {
+		line, _, _ := buf.ReadLine()
+
 		err := stream.Send(&pb.StreamResponse{
 			Pt: &pb.StreamPoint{
-				Name:  r.Pt.Name,
-				Value: r.Pt.Value + int32(n),
+				Name:  string(line),
+				Value: int32(100),
 			},
 		})
 
 		if err != nil {
 			return err
 		}
+
 	}
 
 	return nil

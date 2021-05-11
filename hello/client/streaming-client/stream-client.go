@@ -32,15 +32,15 @@ func main() {
 		log.Fatalf("printLists.err: %v", err)
 	}
 
-	err = printRecord(client, &pb.StreamRequest{Pt: &pb.StreamPoint{Name: "gRPC Stream Client: Record", Value: 2018}})
-	if err != nil {
-		log.Fatalf("printRecord.err: %v", err)
-	}
-
-	err = printRoute(client, &pb.StreamRequest{Pt: &pb.StreamPoint{Name: "gRPC Stream Client: Route", Value: 2018}})
-	if err != nil {
-		log.Fatalf("printRoute.err: %v", err)
-	}
+	//err = printRecord(client, &pb.StreamRequest{Pt: &pb.StreamPoint{Name: "gRPC Stream Client: Record", Value: 2018}})
+	//if err != nil {
+	//	log.Fatalf("printRecord.err: %v", err)
+	//}
+	//
+	//err = printRoute(client, &pb.StreamRequest{Pt: &pb.StreamPoint{Name: "gRPC Stream Client: Route", Value: 2018}})
+	//if err != nil {
+	//	log.Fatalf("printRoute.err: %v", err)
+	//}
 }
 
 func printLists(client pb.StreamServiceClient, r *pb.StreamRequest) error {
