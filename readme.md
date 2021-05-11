@@ -69,6 +69,9 @@ https://github.com/EDDYCJY/go-grpc-example
 
     ```bash
     # source_relative 和proto文件同样的目录
+    pwd
+    # grpc-learn
+    
     protoc --go_out=. --go_opt=paths=source_relative \
         --go-grpc_out=. --go-grpc_opt=paths=source_relative \
         proto/hello.proto
