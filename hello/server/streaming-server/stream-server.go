@@ -8,6 +8,7 @@ package main
 import (
 	"bufio"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"io"
 	"log"
 	"net"
@@ -32,6 +33,8 @@ func main() {
 		log.Fatalf("list %s", err)
 
 	}
+
+	reflection.Register(server)
 
 	// Serve accepts incoming connections on the listener lis, creating a new
 	// ServerTransport and service goroutine for each. The service goroutines

@@ -98,3 +98,32 @@ buf := bufio.NewReader(stdout)
 
 line, _, _ := buf.ReadLine()
 ```
+
+
+# grpc调试
+
+```bash
+go get github.com/fullstorydev/grpcui/...
+# 在一个项目里面执行，需要 go module
+go install github.com/fullstorydev/grpcui/cmd/grpcui
+```
+
+代码处理
+
+```go
+func main() {
+	server := grpc.NewServer()
+
+	// 。。。
+
+	// 进行反射
+	reflection.Register(server)
+```
+
+进行处理
+
+```bash
+grpcui -plaintext 127.0.0.1:1989
+
+gRPC Web UI available at http://127.0.0.1:52191/
+```

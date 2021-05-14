@@ -8,6 +8,7 @@ package main
 import (
 	"context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"net"
 	pb "openvpn/proto"
 )
@@ -27,6 +28,8 @@ func main() {
 	s := grpc.NewServer()
 
 	pb.RegisterGreeterServer(s, &server{})
+
+	reflection.Register(s)
 
 	lis, _ := net.Listen("tcp", port)
 
